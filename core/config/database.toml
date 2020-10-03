@@ -1,0 +1,15 @@
+[session]
+server = "127.0.0.1"
+port = "6879"
+user = "root"
+pass = ""
+
+
+[data]
+    [data.primary]
+    driver = "mysql"
+    host = "127.0.0.1"
+    port = "3306"
+    schema = "db_schema"
+    username = "root"
+    password = ""

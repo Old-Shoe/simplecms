@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b0525af2af3526e2d019c175acc061d",
+    "content-hash": "3108dc5a3419b0105b37e2c250546e83",
     "packages": [
         {
             "name": "yosymfony/parser-utils",
@@ -54,6 +54,10 @@
                 "lexer",
                 "parser"
             ],
+            "support": {
+                "issues": "https://github.com/yosymfony/parser-utils/issues",
+                "source": "https://github.com/yosymfony/parser-utils/tree/master"
+            },
             "time": "2018-06-29T15:31:11+00:00"
         },
         {
@@ -106,6 +110,10 @@
                 "parser",
                 "toml"
             ],
+            "support": {
+                "issues": "https://github.com/yosymfony/toml/issues",
+                "source": "https://github.com/yosymfony/toml/tree/master"
+            },
             "time": "2018-08-08T15:08:14+00:00"
         }
     ],
@@ -115,7 +123,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-gettext": "*"
+    },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.3.0"
 }

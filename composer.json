@@ -1,5 +1,6 @@
 {
     "require": {
-        "yosymfony/toml": "v1.0.4"
+      "yosymfony/toml": "v1.0.4",
+      "ext-gettext": "*"
     }
 }

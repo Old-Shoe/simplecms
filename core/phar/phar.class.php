@@ -24,13 +24,13 @@
  * THE SOFTWARE.
  */
 
-namespace PHAR;
+namespace SimpleCMS\Core;
 
 /**
  * Description of phar
  *
  * @author Leonid Kuzin(Dg_INC) <dg.inc.lcf@gmail.com>
  */
-class phar {
+class PHAR {
     //put your code here
 }

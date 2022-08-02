@@ -1,26 +1,5 @@
 <?php
-namespace SimpleCMS;
-
-require __DIR__ . '/vendor/autoload.php';
-
-ini_set('error_reporting', E_ALL);
-
-spl_autoload_register(function ($class) {
-    var_dump($class);
-    $file = strtolower(str_replace('\\', '/', $class));
-    
-    var_dump($file);
-    var_dump(__DIR__.'/'.$file.'.class.php');
-    if (file_exists($file)) {
-        include __DIR__.'/'.$file.'.class.php';
-    }
-
-});
-
-use Yosymfony\Toml\Toml;
-//use \Core\VPDO\VPDO;
-use Core\VPDO\VPDO\VPDO;
-/* 
+/*
  * The MIT License
  *
  * Copyright 2020 Leonid Kuzin(Dg_INC) <dg.inc.lcf@gmail.com>.
@@ -44,10 +23,20 @@ use Core\VPDO\VPDO\VPDO;
  * THE SOFTWARE.
  */
 
-$array = Toml::ParseFile(__DIR__.'/core/config/database.toml');
+namespace SimpleCMS;
 
-$var = new VPDO($array);
+use SimpleCMS\Core\app;
 
-var_dump($var);
+const SIMPLECMS_ROOT_DIR = __DIR__;
+const SIMPLECMS_LOCALE_DIR = SIMPLECMS_ROOT_DIR . DIRECTORY_SEPARATOR . "locale";
+const SIMPLECMS_CORE_DIR = SIMPLECMS_ROOT_DIR . DIRECTORY_SEPARATOR . "core";
+const SIMPLECMS_VENDOR_DIR = SIMPLECMS_ROOT_DIR . DIRECTORY_SEPARATOR . "vendor";
 
-print_r($array);
+require SIMPLECMS_ROOT_DIR . '/vendor/autoload.php';
+require SIMPLECMS_CORE_DIR . '/autoload.php';
+require SIMPLECMS_CORE_DIR . '/locale.php';
+
+ini_set('error_reporting', E_ALL);
+
+$app = new app();
+$app->init();

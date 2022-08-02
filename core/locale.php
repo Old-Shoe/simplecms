@@ -1,6 +1,5 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
-/* 
+/*
  * The MIT License
  *
  * Copyright 2020 Leonid Kuzin(Dg_INC) <dg.inc.lcf@gmail.com>.
@@ -23,23 +22,24 @@ require __DIR__ . '/../vendor/autoload.php';
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+namespace SimpleCMS\Core;
+
 use Yosymfony\Toml\Toml;
+use const SimpleCMS\SIMPLECMS_LOCALE_DIR;
+use const SimpleCMS\SIMPLECMS_ROOT_DIR;
+use const SimpleCMS\SIMPLECMS_VENDOR_DIR;
 
-define("SIMPLECMS_ROOTDIR", "/usr/share/nginx/html/iamyourdaddy.tk");
-define("SIMPLECMS_LOCALEDIR", SIMPLECMS_ROOTDIR."/locale");
+require SIMPLECMS_VENDOR_DIR . '/autoload.php';
 
-$array = Toml::ParseFile(__DIR__.'/../core/config/coreconfig.toml');
+$array = Toml::ParseFile(SIMPLECMS_ROOT_DIR . '/core/config/coreconfig.toml');
 
-    putenv("LANG=".$array['locale']['language']);
-    setlocale(LC_MESSAGES, $array['locale']['language'].'.'.$array['locale']['codeset']);
-    $domain = "messages";
-    
-    $pathToDomain = SIMPLECMS_LOCALEDIR;
-    $var = bindtextdomain($domain, $pathToDomain);
-    if ($pathToDomain != bindtextdomain($domain, $pathToDomain)) {
-        throw new Exception(_("blablabla"));
-    }
-    textdomain($domain);
-    bind_textdomain_codeset($domain, $array['locale']['codeset']);
-    //echo gettext("hello");
-    echo _("hello\n");
+putenv("LANG=".$array['locale']['language']);
+//setlocale(LC_MESSAGES, $array['locale']['language'].'.'.$array['locale']['codeset']);
+setlocale(LC_ALL, $array['locale']['language'].'.'.$array['locale']['codeset']);
+$domain = "messages";
+
+if (SIMPLECMS_LOCALE_DIR != bindtextdomain($domain, SIMPLECMS_LOCALE_DIR)) {
+    throw new Exception(_("%%exc_bind_domain%%"));
+}
+textdomain($domain);
+bind_textdomain_codeset($domain, $array['locale']['codeset']);

@@ -1,6 +1,5 @@
 <?php
-
-/* 
+/*
  * The MIT License
  *
  * Copyright 2020 Leonid Kuzin(Dg_INC) <dg.inc.lcf@gmail.com>.
@@ -24,16 +23,27 @@
  * THE SOFTWARE.
  */
 
-set_include_path( './classes/' . PATH_SEPARATOR . get_include_path() );
-spl_autoload_extensions( '.php , .class.php' );
-spl_autoload_register();
-function linux_namespaces_autoload($class) {
-    /* use if you need to lowercase first char *
-    $class  =  implode( DIRECTORY_SEPARATOR , array_map( 'lcfirst' , explode( '\\' , $class_name ) ) );/* else just use the following : */
-    $class  =  implode(DIRECTORY_SEPARATOR , explode('\\' , $class));
+namespace SimpleCMS\Core;
+
+use Exception;
+
+use const SimpleCMS\SIMPLECMS_CORE_DIR;
+use const SimpleCMS\SIMPLECMS_VENDOR_DIR;
+
+set_include_path(SIMPLECMS_CORE_DIR . PATH_SEPARATOR . get_include_path());
+/**
+ * @throws Exception
+ */
+function namespaces_autoload ($class): void {
+    $lcfirst = fn(string $name) => strtolower($name);
+
+    $class_name = implode(DIRECTORY_SEPARATOR,
+            array_map($lcfirst, explode('\\' , $class)));
+
     static $extensions = array();
-    if (empty($extensions )) {
-        $extensions = array_map('trim', explode(',', spl_autoload_extensions()));
+    if (empty($extensions)) {
+        $extensions = array_map('trim',
+                explode(',', spl_autoload_extensions('.php , .class.php')));
     }
     static $include_paths = array();
     if (empty($include_paths)) {
@@ -42,14 +52,15 @@ function linux_namespaces_autoload($class) {
     foreach ($include_paths as $path) {
         $path .= (DIRECTORY_SEPARATOR !== $path[strlen($path) - 1]) ? DIRECTORY_SEPARATOR : '';
         foreach ($extensions as $extension) {
-            $file = $path . $class . $extension;
+            $file = $path . $class_name . $extension;
             if (file_exists($file) && is_readable($file)) {
+                print $file;
                 require $file;
                 return;
             }
         }
     }
-    //throw new Exception(_( 'class ' . $class_name . ' could not be found.' ));
-    throw new Exception(fprintf(_('class %s could not be found.'), $class));
+    throw new Exception(sprintf(_("%%exc_autoload %s %%"), $class_name));
 }
-spl_autoload_register('linux_namespaces_autoload' , TRUE , FALSE );
+
+spl_autoload_register(__NAMESPACE__ . '\namespaces_autoload', TRUE, FALSE);

@@ -23,18 +23,11 @@
  * THE SOFTWARE.
  */
 
-namespace SimpleCMS;
+use Core\app;
 
-use SimpleCMS\Core\app;
-
-const SIMPLECMS_ROOT_DIR = __DIR__;
-const SIMPLECMS_LOCALE_DIR = SIMPLECMS_ROOT_DIR . DIRECTORY_SEPARATOR . "locale";
-const SIMPLECMS_CORE_DIR = SIMPLECMS_ROOT_DIR . DIRECTORY_SEPARATOR . "core";
-const SIMPLECMS_VENDOR_DIR = SIMPLECMS_ROOT_DIR . DIRECTORY_SEPARATOR . "vendor";
-
-require SIMPLECMS_ROOT_DIR . '/vendor/autoload.php';
-require SIMPLECMS_CORE_DIR . '/autoload.php';
-require SIMPLECMS_CORE_DIR . '/locale.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/core/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/core/locale.php';
 
 ini_set('error_reporting', E_ALL);
 

@@ -1,9 +1,16 @@
 <?php
 
-namespace SimpleCMS\Core;
+namespace Core;
+
+use Exception;
 
 class app {
+    /**
+     * @throws Exception
+     */
     function init(): void {
+
+        Locale::init();
         // главная страница вашсайт.рф
         Router::route('/', function () {
             print 'Домашняя станица';

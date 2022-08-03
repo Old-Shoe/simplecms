@@ -22,24 +22,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace SimpleCMS\Core;
+namespace Core;
 
 use Yosymfony\Toml\Toml;
-use const SimpleCMS\SIMPLECMS_LOCALE_DIR;
-use const SimpleCMS\SIMPLECMS_ROOT_DIR;
-use const SimpleCMS\SIMPLECMS_VENDOR_DIR;
+use Exception;
 
-require SIMPLECMS_VENDOR_DIR . '/autoload.php';
+class Locale
+{
+    /**
+     * @throws Exception
+     */
+    static function init() :void
+    {
+        $array = Toml::ParseFile(SIMPLECMS_ROOT_DIR . '/core/config/coreconfig.toml');
 
-$array = Toml::ParseFile(SIMPLECMS_ROOT_DIR . '/core/config/coreconfig.toml');
+        putenv("LANG=".$array['locale']['language']);
+        //setlocale(LC_MESSAGES, $array['locale']['language'].'.'.$array['locale']['codeset']);
+        setlocale(LC_ALL, $array['locale']['language'].'.'.$array['locale']['codeset']);
+        $domain = "messages";
 
-putenv("LANG=".$array['locale']['language']);
-//setlocale(LC_MESSAGES, $array['locale']['language'].'.'.$array['locale']['codeset']);
-setlocale(LC_ALL, $array['locale']['language'].'.'.$array['locale']['codeset']);
-$domain = "messages";
-
-if (SIMPLECMS_LOCALE_DIR != bindtextdomain($domain, SIMPLECMS_LOCALE_DIR)) {
-    throw new Exception(_("%%exc_bind_domain%%"));
+        if (!bindtextdomain($domain, SIMPLECMS_ROOT_DIR . "/locale")) {
+            throw new Exception(_("%%exc_bind_domain%%"));
+        }
+        textdomain($domain);
+        bind_textdomain_codeset($domain, $array['locale']['codeset']);
+    }
 }
-textdomain($domain);
-bind_textdomain_codeset($domain, $array['locale']['codeset']);

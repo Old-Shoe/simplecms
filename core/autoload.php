@@ -23,22 +23,18 @@
  * THE SOFTWARE.
  */
 
-namespace SimpleCMS\Core;
+namespace Core;
 
 use Exception;
 
-use const SimpleCMS\SIMPLECMS_CORE_DIR;
-use const SimpleCMS\SIMPLECMS_VENDOR_DIR;
+define("SIMPLECMS_ROOT_DIR", $_SERVER['DOCUMENT_ROOT']);
 
-set_include_path(SIMPLECMS_CORE_DIR . PATH_SEPARATOR . get_include_path());
-/**
- * @throws Exception
- */
+set_include_path(SIMPLECMS_ROOT_DIR);
+
 function namespaces_autoload ($class): void {
     $lcfirst = fn(string $name) => strtolower($name);
 
-    $class_name = implode(DIRECTORY_SEPARATOR,
-            array_map($lcfirst, explode('\\' , $class)));
+    $class = implode(DIRECTORY_SEPARATOR, array_map($lcfirst, explode('\\' , $class)));
 
     static $extensions = array();
     if (empty($extensions)) {
@@ -52,15 +48,16 @@ function namespaces_autoload ($class): void {
     foreach ($include_paths as $path) {
         $path .= (DIRECTORY_SEPARATOR !== $path[strlen($path) - 1]) ? DIRECTORY_SEPARATOR : '';
         foreach ($extensions as $extension) {
-            $file = $path . $class_name . $extension;
-            if (file_exists($file) && is_readable($file)) {
-                print $file;
-                require $file;
-                return;
+            $file = $path . $class . $extension;
+            try {
+                if (file_exists($file) && is_readable($file)) {
+                    require $file;
+                }
+            } catch (Exception $e) {
+                echo sprintf(_("%%exc_autoload %s: %s %%"), $class, $e->getMessage());
             }
         }
     }
-    throw new Exception(sprintf(_("%%exc_autoload %s %%"), $class_name));
 }
 
 spl_autoload_register(__NAMESPACE__ . '\namespaces_autoload', TRUE, FALSE);

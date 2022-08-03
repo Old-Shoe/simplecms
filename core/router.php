@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleCMS\Core;
+namespace Core;
 
 class Router {
     // массив для хранения соответствия url => функция

@@ -25,12 +25,42 @@
  */
 
 namespace SimpleCMS\Core;
+use BadMethodCallException;
+use Exception;
+use FilesystemIterator;
+use Phar;
+use UnexpectedValueException;
 
 /**
  * Description of phar
  *
  * @author Leonid Kuzin(Dg_INC) <dg.inc.lcf@gmail.com>
  */
-class PHAR {
-    //put your code here
+class CustPHAR {
+    protected string $pharPath;
+    protected Phar $phar;
+
+    public function __construct(string $path)
+    {
+        $this->pharPath = $path;
+
+        try {
+            $this->phar = new Phar($path, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME);
+        } catch (UnexpectedValueException $e) {
+            die(sprintf(_('Could not open %s'), $e->getFile()));
+        } catch (BadMethodCallException $e) {
+            echo _('technically, this cannot happen');
+        } catch (Exception $e) {
+            echo sprintf(_('Unknown error: %s'), $e->getMessage());
+        }
+
+    }
+
+    public function getInfo() :void
+    {
+        $var = $this->phar->getMetadata();
+    }
 }
+
+$pfff = new CustPHAR(__DIR__ . '../../../extensions/example-phar.phar');
+$pfff->getInfo();

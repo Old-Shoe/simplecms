@@ -1,0 +1,10 @@
+{
+  "chmod": "0644",
+  "compression": "GZ",
+  "algorithm": "MD5",
+  "stub": "stub.php",
+  "main": false,
+  "metadata": "Loader::MetaInterface",
+  "output": "../../extensions/example-phar.phar",
+  "datetime": "release-date"
+}

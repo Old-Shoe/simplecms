@@ -1,6 +1,7 @@
 {
     "require": {
-      "yosymfony/toml": "v1.0.4",
-      "ext-gettext": "*"
+        "yosymfony/toml": "v1.0.4",
+        "ext-gettext": "*",
+        "smarty/smarty": "^4.2"
     }
 }

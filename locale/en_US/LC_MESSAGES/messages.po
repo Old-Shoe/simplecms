@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-08-02 18:00+0300\n"
-"PO-Revision-Date: 2022-08-02 18:07+0300\n"
+"POT-Creation-Date: 2022-08-03 03:35+0300\n"
+"PO-Revision-Date: 2022-08-03 03:35+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -17,12 +17,12 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: extensions\n"
 "X-Poedit-SearchPathExcluded-2: web\n"
 
-#: core/autoload.php:61
+#: core/autoload.php:57
 #, php-format
-msgid "%%exc_autoload %s %%"
-msgstr "Class %s could not be found"
+msgid "%%exc_autoload %s: %s %%"
+msgstr "Class %s could not be found, message: %s"
 
-#: core/locale.php:41
+#: core/locale.php:45
 #, php-format
 msgid "%%exc_bind_domain%%"
 msgstr "Can't bind local"

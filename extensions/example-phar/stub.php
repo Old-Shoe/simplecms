@@ -3,11 +3,16 @@
  * Custom banner
  */
 
-include_once 'phar://' . __FILE__ . '/loader.php';
-
 spl_autoload_register(function ($class) {
-    include 'phar://' . str_replace('_', '/', strtolower($class)) . '.php';
+    include 'phar://me.phar/' . str_replace('_', '/', strtolower($class)) . '.class.php';
 });
-Phar::mapPhar('example-phar.phar');
+
+try {
+    Phar::mapPhar('me.phar');
+    include 'phar://me.phar/loader.php';
+} catch (PharException $e) {
+    echo $e->getMessage();
+    die('Cannot initialize Phar');
+}
 
 __HALT_COMPILER(); ?>

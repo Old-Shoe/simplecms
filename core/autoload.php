@@ -61,7 +61,7 @@ function namespaces_autoload ($class): void {
     }
 }
 
-function phar_autoload ($class): void {
+/*function phar_autoload ($class): void {
     $lcfirst = fn(string $name) => strtolower($name);
 
     $class = implode(DIRECTORY_SEPARATOR, array_map($lcfirst, explode('\\' , $class)));
@@ -90,5 +90,5 @@ function phar_autoload ($class): void {
     }
 }
 
-spl_autoload_register(__NAMESPACE__ . '\phar_autoload', TRUE, FALSE);
+spl_autoload_register(__NAMESPACE__ . '\phar_autoload', TRUE, FALSE);*/
 spl_autoload_register(__NAMESPACE__ . '\namespaces_autoload', TRUE, FALSE);

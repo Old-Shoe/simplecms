@@ -36,7 +36,7 @@ use UnexpectedValueException;
  *
  * @author Leonid Kuzin(Dg_INC) <dg.inc.lcf@gmail.com>
  */
-class CustPHAR {
+class Extension {
     protected string $pharPath;
     protected Phar $phar;
 
@@ -56,11 +56,40 @@ class CustPHAR {
 
     }
 
-    public function getInfo() :void
+    /**
+     * @throws Exception
+     */
+    public function getInfo() :object
     {
-        $var = $this->phar->getMetadata();
+        if($this->phar->hasMetadata()) {
+            $meta = $this->phar->getMetadata();
+            return $meta["info"];
+        }
+        throw new Exception(_("No metadata in file!"));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getInstances() :array
+    {
+        static $inst = array();
+
+        try {
+            if($this->phar->hasMetadata()) {
+                $meta = $this->phar->getMetadata();
+                $instances = $meta["instances"];
+                foreach ($instances as $instance) {
+                    foreach ($instance as $class => $function)
+                    {
+                        $inst[$class] = $function;
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            throw new Exception();
+        }
+
+        return $inst;
     }
 }
-
-$pfff = new CustPHAR(__DIR__ . '../../../extensions/example-phar.phar');
-$pfff->getInfo();

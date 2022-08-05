@@ -16,6 +16,6 @@ class app {
             print 'Домашняя станица';
         });
 
-        Router::execute($_SERVER['REQUEST_URI']);
+        Router::execute(filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL));
     }
 }

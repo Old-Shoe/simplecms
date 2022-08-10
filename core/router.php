@@ -2,40 +2,37 @@
 
 namespace Core;
 
-class Router {
-    // массив для хранения соответствия url => функция
-    private static array $routes = array();
+use Core\Include\VPDO;
+use PDO;
 
-    // запрещаем создание и копирование статического объекта
+class Router
+{
     private function __construct() {}
     private function __clone() {}
 
-
-    // данный метод принимает шаблон url-адреса
-    // как шаблон регулярного выражения и связывает его
-    // с пользовательской функцией
-    public static function route($pattern, $callback): void
+    private static function sanitize_url($value): bool|array
     {
-        // функция str_replace здесь нужна, для экранирования всех прямых слешей
-        // так как они используются в качестве маркеров регулярного выражения
-        $pattern = '/^' . str_replace('/', '\/', $pattern) . '$/';
-        self::$routes[$pattern] = $callback;
+        if (!str_contains($value, '/')) return false;
+        $arr = explode('/', trim($value, '/'), 2);
+        if (empty($arr)) {
+            return false;
+        } else {
+            return $arr;
+        }
     }
 
-
-    // данный метод проверяет запрошенный $url(адрес) на
-    // соответствие адресам, хранящимся в массиве $routes
-    public static function execute($url)
+    public static function execute($filtered_request): void
     {
-        foreach (self::$routes as $pattern => $callback)
+        if($filtered_request != '/' && $_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            if (preg_match($pattern, $url, $params)) // сравнение идет через регулярное выражение
-            {
-                // соответствие найдено, поэтому удаляем первый элемент из массива $params
-                // который содержит всю найденную строку
-                array_shift($params);
-                return call_user_func_array($callback, array_values($params));
-            }
+            $request = filter_var($filtered_request, FILTER_CALLBACK, array('options' => __NAMESPACE__ . '\Router::sanitize_url'));
+
+            VPDO::connect();
+            $class_instance = VPDO::getSingleRecord('SELECT extension FROM instances WHERE function = :function', $request[1], 'function', PDO::PARAM_STR);
+            $file_name = VPDO::getSingleRecord('SELECT file_name FROM extensions where alias = :alias', $class_instance, 'alias', PDO::PARAM_STR);
+            require SIMPLECMS_ROOT_DIR . DIRECTORY_SEPARATOR . 'extensions' . DIRECTORY_SEPARATOR . $file_name;
+            $GLOBALS['simplecms']['extensions'] = $file_name;
+            var_dump(call_user_func(implode('::', $request)));
         }
     }
 }

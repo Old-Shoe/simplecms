@@ -1,0 +1,16 @@
+[Unit]
+Description=SimpleCMS
+After=network.target network-online.target nss-lookup.target
+
+[Service]
+User=http
+Group=http
+Type=forking
+PIDFile=/run/swoole/simplecms.pid
+ExecStart=/usr/bin/php -f /srv/http/example.com/service.php
+ExecStop=/bin/kill $MAINPID
+ExecReload=/bin/kill -USR1 $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

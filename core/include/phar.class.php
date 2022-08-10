@@ -38,8 +38,12 @@ use UnexpectedValueException;
  */
 class Extension {
     protected string $pharPath;
-    protected Phar $phar;
+    protected Phar|null $phar = null;
+    protected mixed $metadata;
 
+    /**
+     * @throws Exception
+     */
     public function __construct(string $path)
     {
         $this->pharPath = $path;
@@ -54,6 +58,14 @@ class Extension {
             echo sprintf(_('Unknown error: %s'), $e->getMessage());
         }
 
+        if(!$this->phar->hasMetadata() && $this->phar != null) { throw new Exception(_("No metadata in file!"));}
+    }
+
+
+    public function isInternal():bool
+    {
+        $meta = $this->phar->getMetadata();
+        return $meta["info"];
     }
 
     /**
@@ -61,11 +73,8 @@ class Extension {
      */
     public function getInfo() :object
     {
-        if($this->phar->hasMetadata()) {
-            $meta = $this->phar->getMetadata();
-            return $meta["info"];
-        }
-        throw new Exception(_("No metadata in file!"));
+        $meta = $this->phar->getMetadata();
+        return $meta["info"];
     }
 
     /**
@@ -76,18 +85,16 @@ class Extension {
         static $inst = array();
 
         try {
-            if($this->phar->hasMetadata()) {
-                $meta = $this->phar->getMetadata();
-                $instances = $meta["instances"];
-                foreach ($instances as $instance) {
-                    foreach ($instance as $class => $function)
-                    {
-                        $inst[$class] = $function;
-                    }
+            $meta = $this->phar->getMetadata();
+            $instances = $meta["instances"];
+            foreach ($instances as $instance) {
+                foreach ($instance as $class => $function)
+                {
+                    $inst[$class] = $function;
                 }
             }
         } catch (Exception $e) {
-            throw new Exception();
+            throw new Exception(sprintf("blablabla: %s", $e->getMessage()));
         }
 
         return $inst;

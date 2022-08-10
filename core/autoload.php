@@ -30,7 +30,6 @@ use Exception;
 define("SIMPLECMS_ROOT_DIR", $_SERVER['DOCUMENT_ROOT']);
 
 set_include_path(SIMPLECMS_ROOT_DIR);
-set_include_path(SIMPLECMS_ROOT_DIR . "/extensions");
 
 function namespaces_autoload ($class): void {
     $lcfirst = fn(string $name) => strtolower($name);
@@ -61,34 +60,4 @@ function namespaces_autoload ($class): void {
     }
 }
 
-/*function phar_autoload ($class): void {
-    $lcfirst = fn(string $name) => strtolower($name);
-
-    $class = implode(DIRECTORY_SEPARATOR, array_map($lcfirst, explode('\\' , $class)));
-
-    static $extensions = array();
-    if (empty($extensions)) {
-        $extensions = array_map('trim',
-            explode(',', spl_autoload_extensions('.phar')));
-    }
-    static $include_paths = array();
-    if (empty($include_paths)) {
-        $include_paths = explode(PATH_SEPARATOR, get_include_path());
-    }
-    foreach ($include_paths as $path) {
-        $path .= (DIRECTORY_SEPARATOR !== $path[strlen($path) - 1]) ? DIRECTORY_SEPARATOR : '';
-        foreach ($extensions as $extension) {
-            $file = $path . $class . $extension;
-            try {
-                if (file_exists($file) && is_readable($file)) {
-                    require $file;
-                }
-            } catch (Exception $e) {
-                echo sprintf(_("%%exc_autoload %s: %s %%"), $class, $e->getMessage());
-            }
-        }
-    }
-}
-
-spl_autoload_register(__NAMESPACE__ . '\phar_autoload', TRUE, FALSE);*/
 spl_autoload_register(__NAMESPACE__ . '\namespaces_autoload', TRUE, FALSE);

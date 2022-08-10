@@ -1,0 +1,30 @@
+{
+  "chmod": "0744",
+  "compression": "GZ",
+  "algorithm": "MD5",
+  "stub": "stub.php",
+  "main": false,
+  "metadata": {
+    "info": {
+      "name": "Users",
+      "author": "Leonid Kuzin <dg.inc.lcf@gmail.com>",
+      "version": "0.0.1-dev",
+      "internal": false,
+      "license": "MIT"
+    },
+    "instances": [
+      {"example": ["print_hello_world", "print_not_hello", "fuck_you"]},
+      {"simple": ["create", "delete", "update"]}
+    ]
+  },
+  "output": "../../extensions/example-phar.phar",
+  "datetime": "release-date",
+  "finder": [{
+    "notName": "/LICENSE|.*\\.md|.*\\.dist|Makefile|composer\\.json|composer\\.lock/",
+    "name": "*.class.php",
+    "exclude": [
+      "tests",
+      "test"
+    ],
+    "in": "."}]
+}

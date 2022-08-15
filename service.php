@@ -27,7 +27,7 @@ $server->set([
     'hook_flags' => SWOOLE_HOOK_ALL,
     'daemonize' => true,
     'pid_file' => '/var/run/swoole/simplecms.pid',
-    'static_handler_locations' => ['/web/static'],
+    'static_handler_locations' => ['/webroot/static'],
     /*'ssl_cert_file' => $key_dir . '/ssl.crt',
     'ssl_key_file' => $key_dir . '/ssl.key',*/
 ]);

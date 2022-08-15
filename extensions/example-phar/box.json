@@ -7,6 +7,7 @@
   "metadata": {
     "info": {
       "name": "Example PHAR",
+      "alias": "me",
       "author": "Leonid Kuzin <dg.inc.lcf@gmail.com>",
       "version": "0.0.1-dev",
       "internal": true,
@@ -15,7 +16,8 @@
     "instances": [
       {"example": ["print_hello_world", "print_not_hello", "fuck_you"]},
       {"simple": ["create", "delete", "update"]}
-    ]
+    ],
+    "tags": ["example"]
   },
   "output": "../../extensions/example-phar.phar",
   "datetime": "release-date",

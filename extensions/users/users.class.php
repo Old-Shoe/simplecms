@@ -18,11 +18,4 @@ class User
     {
 
     }
-
-    function getRoleAllPermissions($role_id){
-        global $conn;
-        $sql = "SELECT permissions.* FROM permissions JOIN permission_role ON permissions.id = permission_role.permission_id WHERE permission_role.role_id=?";
-        $permissions = getMultipleRecords($sql, 'i', [$role_id]);
-        return $permissions;
-    }
 }

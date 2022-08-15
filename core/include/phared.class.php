@@ -24,11 +24,12 @@
  * THE SOFTWARE.
  */
 
-namespace SimpleCMS\Core;
+namespace Core\Include;
 use BadMethodCallException;
 use Exception;
 use FilesystemIterator;
 use Phar;
+use stdClass;
 use UnexpectedValueException;
 
 /**
@@ -36,20 +37,17 @@ use UnexpectedValueException;
  *
  * @author Leonid Kuzin(Dg_INC) <dg.inc.lcf@gmail.com>
  */
-class Extension {
-    protected string $pharPath;
+class Phared {
     protected Phar|null $phar = null;
-    protected mixed $metadata;
+    protected array $metadata;
 
     /**
      * @throws Exception
      */
     public function __construct(string $path)
     {
-        $this->pharPath = $path;
-
         try {
-            $this->phar = new Phar($path, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME);
+            $this->phar = new Phar($path .'.phar', FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME);
         } catch (UnexpectedValueException $e) {
             die(sprintf(_('Could not open %s'), $e->getFile()));
         } catch (BadMethodCallException $e) {
@@ -58,43 +56,72 @@ class Extension {
             echo sprintf(_('Unknown error: %s'), $e->getMessage());
         }
 
-        if(!$this->phar->hasMetadata() && $this->phar != null) { throw new Exception(_("No metadata in file!"));}
+        if(!$this->phar->hasMetadata() && $this->phar != null) {
+            throw new Exception(_("No metadata in file!"));
+        } else {
+            $this->metadata = $this->phar->getMetadata();
+        }
     }
 
-
-    public function isInternal():bool
+    public function getMetadata()
     {
-        $meta = $this->phar->getMetadata();
-        return $meta["info"];
+        return $this->metadata;
+    }
+
+    public function getAlias(): null|string
+    {
+        return $this->phar->getAlias();
     }
 
     /**
      * @throws Exception
      */
-    public function getInfo() :object
+    public function verify(string $sign): bool
     {
-        $meta = $this->phar->getMetadata();
-        return $meta["info"];
+        $file_sign = $this->phar->getSignature();
+        if($file_sign === false){
+            throw new Exception('Signature not found!');
+        }
+        switch ($file_sign['hash'])
+        {
+            case 'MD5':
+                if($file_sign['hash_type'] === $sign)
+                {
+                    return true;
+                }
+                break;
+            case 'OPENSSL':
+                break;
+        }
+        return false;
+    }
+
+    public function isInternal(): bool
+    {
+        return (boolean)$this->metadata['info']['internal'];
     }
 
     /**
      * @throws Exception
      */
-    public function getInstances() :array
+    public function getInfo(): array
+    {
+        return (array)$this->metadata['info'];
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getInstances(): array
     {
         static $inst = array();
 
-        try {
-            $meta = $this->phar->getMetadata();
-            $instances = $meta["instances"];
-            foreach ($instances as $instance) {
-                foreach ($instance as $class => $function)
-                {
-                    $inst[$class] = $function;
-                }
+        $instances = $this->metadata["instances"];
+        foreach ($instances as $instance) {
+            foreach ($instance as $class => $function)
+            {
+                $inst[$class] = $function;
             }
-        } catch (Exception $e) {
-            throw new Exception(sprintf("blablabla: %s", $e->getMessage()));
         }
 
         return $inst;

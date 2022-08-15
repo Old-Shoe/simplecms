@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
 "X-Poedit-SearchPathExcluded-1: extensions\n"
-"X-Poedit-SearchPathExcluded-2: web\n"
+"X-Poedit-SearchPathExcluded-2: webroot\n"
 
 #: core/autoload.php:57
 #, php-format

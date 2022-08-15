@@ -9,12 +9,16 @@
         "ext-pdo": "*",
         "ext-gettext": "*",
         "yosymfony/toml": "v1.0.4",
-        "smarty/smarty": "^4.2"
+        "smarty/smarty": "^4.2",
+        "xpdo/xpdo": "^v3.1.2",
+        "monolog/monolog": "^3.2",
+      "ext-dom": "*",
+        "ext-libxml": "*"
     },
     "suggest": {
-        "ext-swoole": "Start with PHP Swoole",
         "workerman/workerman": "Start with workerman"
     },
+    "prefer-stable": true,
     "minimum-stability": "stable",
     "require-dev": {
         "phpunit/phpunit": "^9.5.21",

@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@sencha/ext-ux": "file:@sencha_ext-ux.7.0.0.tgz"
+  }
+}

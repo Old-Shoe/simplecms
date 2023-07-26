@@ -5175,7 +5175,7 @@ Ext.apply(Ext, {_namedScopes:{'this':{isThis:1}, controller:{isController:1}, ow
     return instance || Ext.create(classReference);
   }
   if (!Ext.isObject(config)) {
-    Ext.raise('Invalid config, must be a valid config object');
+    Ext.raise('Invalid Config, must be a valid Config object');
   }
   if ('xtype' in config) {
     newInstance = manager.instantiateByAlias('widget.' + config.xtype, config);
@@ -5820,7 +5820,7 @@ Ext.Config.prototype = {self:Ext.Config, isConfig:true, combine:function(value, 
           merge = merge || cfg.merge;
         }
         if (!mixinClass && isCached && !cachedConfigs[name]) {
-          Ext.raise('Redefining config as cached: ' + name + ' in class: ' + Cls.$className);
+          Ext.raise('Redefining Config as cached: ' + name + ' in class: ' + Cls.$className);
         }
         currentValue = values[name];
         if (merge) {
@@ -5881,10 +5881,10 @@ Ext.Config.prototype = {self:Ext.Config, isConfig:true, combine:function(value, 
     for (oldName in configs) {
       newName = configs[oldName];
       if (!newName) {
-        message = 'This config has been removed.';
+        message = 'This Config has been removed.';
       } else {
         if (!(message = newName.message)) {
-          message = 'This config has been renamed to "' + newName + '"';
+          message = 'This Config has been renamed to "' + newName + '"';
         }
       }
       deprecations[oldName] = className + oldName + ': ' + message;
@@ -6120,7 +6120,7 @@ Ext.Config.prototype = {self:Ext.Config, isConfig:true, combine:function(value, 
             continue;
           } else {
             if (name !== 'type') {
-              Ext.log.warn('No such config "' + name + '" for class ' + instance.$className);
+              Ext.log.warn('No such Config "' + name + '" for class ' + instance.$className);
             }
           }
         }
@@ -6712,7 +6712,7 @@ Ext.Base = function(flexSetter) {
     var me = this, config = Ext.Config.get(name), names = config.names, value = me[names.get]();
     me[names.set] = function(v) {
       if (v !== value) {
-        Ext.raise('Cannot change frozen config "' + name + '"');
+        Ext.raise('Cannot change frozen Config "' + name + '"');
       }
       return me;
     };
@@ -6721,7 +6721,7 @@ Ext.Base = function(flexSetter) {
         return value;
       }, set:function(v) {
         if (v !== value) {
-          Ext.raise('Cannot change frozen config "' + name + '"');
+          Ext.raise('Cannot change frozen Config "' + name + '"');
         }
       }});
     }
@@ -6739,7 +6739,7 @@ Ext.Base = function(flexSetter) {
               return me;
             } else {
               if (name !== 'type') {
-                Ext.log.warn('No such config "' + name + '" for class ' + me.$className);
+                Ext.log.warn('No such Config "' + name + '" for class ' + me.$className);
               }
             }
           }
@@ -16445,7 +16445,7 @@ Ext.define('Ext.dom.Element', function(Element) {
       return null;
     }
     if (Ext.cache[dom.id]) {
-      Ext.raise("Element cache already contains an entry for id '" + dom.id + "'.  Use Ext.get() to create or retrieve Element instances.");
+      Ext.raise("Element Cache already contains an entry for id '" + dom.id + "'.  Use Ext.get() to create or retrieve Element instances.");
     }
     me.dom = dom;
     if (!(id = dom.id)) {
@@ -16584,7 +16584,7 @@ Ext.define('Ext.dom.Element', function(Element) {
       return null;
     }
     function warnDuplicate(id) {
-      Ext.raise('DOM element with id ' + id + ' in Element cache is not the same as element in the DOM. ' + 'Make sure to clean up Element instances using destroy()');
+      Ext.raise('DOM element with id ' + id + ' in Element Cache is not the same as element in the DOM. ' + 'Make sure to clean up Element instances using destroy()');
     }
     if (el.isFly) {
       el = el.dom;
@@ -19722,7 +19722,7 @@ Ext.define('Ext.mixin.Bindable', {mixinId:'bindable', config:{bind:{$value:null,
   }
   var me = this, viewModel = me.lookupViewModel(), twoWayable = me.getTwoWayBindable(), getBindTemplateScope = me._getBindTemplateScope, b, watch, property, descriptor;
   if (!viewModel) {
-    Ext.raise('Cannot use bind config without a viewModel');
+    Ext.raise('Cannot use bind Config without a viewModel');
   }
   if (typeof binds === 'string') {
     if (!me.defaultBindProperty) {
@@ -20042,7 +20042,7 @@ Ext.define('Ext.plugin.Abstract', {alternateClassName:'Ext.AbstractPlugin', mixi
           }
         } else {
           if (type !== 'array') {
-            Ext.raise('Invalid value for "plugins" config ("' + type + '"');
+            Ext.raise('Invalid value for "plugins" Config ("' + type + '"');
           } else {
             plugins = plugins.slice();
           }
@@ -20845,7 +20845,7 @@ border:null, touchAction:null, eventHandlers:{focus:'handleFocusEvent', blur:'ha
     me.baseCls = me.classCls || Ext.baseCSSPrefix + me.xtype;
   }
   if (config && 'baseCls' in config) {
-    Ext.raise('baseCls cannot be used as an instance config. It must be specified ' + 'at class definition time.');
+    Ext.raise('baseCls cannot be used as an instance Config. It must be specified ' + 'at class definition time.');
   }
   if (config && config.controller || me.config.controller) {
     me.referenceHolder = true;
@@ -21246,7 +21246,7 @@ border:null, touchAction:null, eventHandlers:{focus:'handleFocusEvent', blur:'ha
   this.element.applyStyles(style);
   return null;
 }, getStyle:function() {
-  Ext.Error.raise("'style' is a write-only config. To query element styles use " + 'the Ext.dom.Element API.');
+  Ext.Error.raise("'style' is a write-only Config. To query element styles use " + 'the Ext.dom.Element API.');
 }, updateRenderTo:function(newContainer) {
   this.render(newContainer);
 }, updateTouchAction:function(touchAction) {
@@ -21347,7 +21347,7 @@ border:null, touchAction:null, eventHandlers:{focus:'handleFocusEvent', blur:'ha
   Ext.raise('baseCls cannot be reconfigured. It must be specified at class definition time.');
 }, onClassExtended:function(Class, members) {
   if (members.config && members.config.baseCls) {
-    Ext.raise('baseCls must be declared directly on the class body. Please move it ' + 'outside of the config block.');
+    Ext.raise('baseCls must be declared directly on the class body. Please move it ' + 'outside of the Config block.');
   }
 }, privates:{_hideModes:{clip:'CLIP', display:'DISPLAY', offsets:'OFFSETS', opacity:'OPACITY', visibility:'VISIBILITY'}, noRippleSelector:'.' + Ext.baseCSSPrefix + 'no-ripple', addElementReferenceOnDemand:function(name, domNode) {
   if (this._elementListeners[name]) {
@@ -27769,7 +27769,7 @@ Ext.define('Ext.util.MixedCollection', {extend:Ext.util.AbstractMixedCollection,
 Ext.define('Ext.util.CollectionKey', {mixins:[Ext.mixin.Identifiable], isCollectionKey:true, observerPriority:-200, config:{collection:null, keyFn:null, property:null, rootProperty:null, unique:true}, generation:0, map:null, mapRebuilds:0, constructor:function(config) {
   this.initConfig(config);
   if (!Ext.isFunction(this.getKey)) {
-    Ext.raise('CollectionKey requires a keyFn or property config');
+    Ext.raise('CollectionKey requires a keyFn or property Config');
   }
 }, get:function(key) {
   var map = this.map || this.getMap();
@@ -34933,7 +34933,7 @@ Ext.define('Ext.data.Store', {extend:Ext.data.ProxyStore, alias:'store.store', m
   if (config) {
     if (config.buffered) {
       if (this.self !== Ext.data.Store) {
-        Ext.raise('buffered config not supported on derived Store classes. ' + 'Please derive from Ext.data.BufferedStore.');
+        Ext.raise('buffered Config not supported on derived Store classes. ' + 'Please derive from Ext.data.BufferedStore.');
       }
       return new Ext.data['BufferedStore'](config);
     }
@@ -35664,7 +35664,7 @@ Ext.define('Ext.app.Controller', {extend:Ext.app.BaseController, statics:{string
       cls[getterName] = getter = me.createGetter(strings.getter, name);
     } else {
       if (getterName === 'getMainView') {
-        Ext.log.warn("Cannot have a view named 'Main' - getter conflicts " + 'with mainView config.');
+        Ext.log.warn("Cannot have a view named 'Main' - getter conflicts " + 'with mainView Config.');
       }
     }
     if (getter && kind !== 'controller') {
@@ -35952,7 +35952,7 @@ Ext.define('Ext.app.Application', {extend:Ext.app.Controller, isApplication:true
         ns[appProperty] = me;
       } else {
         if (ns[appProperty] !== me) {
-          Ext.log.warn('An existing reference is being overwritten for ' + name + '.' + appProperty + '. See the appProperty config.');
+          Ext.log.warn('An existing reference is being overwritten for ' + name + '.' + appProperty + '. See the appProperty Config.');
         }
       }
     }
@@ -36262,7 +36262,7 @@ Ext.define('Ext.mixin.Container', {extend:Ext.Mixin, mixinConfig:{id:'container'
 Ext.define('Ext.util.KeyMap', {alternateClassName:'Ext.KeyMap', eventName:'keydown', constructor:function(config) {
   var me = this;
   if (arguments.length !== 1 || typeof config === 'string' || config.dom || config.tagName || config === document || config.isComponent) {
-    Ext.raise('Legacy multi-argument KeyMap constructor is removed. ' + 'Use a config object instead.');
+    Ext.raise('Legacy multi-argument KeyMap constructor is removed. ' + 'Use a Config object instead.');
   }
   Ext.apply(me, config);
   me.bindings = [];
@@ -36454,7 +36454,7 @@ Ext.define('Ext.util.KeyMap', {alternateClassName:'Ext.KeyMap', eventName:'keydo
 Ext.define('Ext.util.KeyNav', {alternateClassName:'Ext.KeyNav', disabled:false, defaultEventAction:false, forceKeyDown:false, eventName:'keypress', statics:{keyOptions:{left:37, right:39, up:38, down:40, space:32, pageUp:33, pageDown:34, del:46, backspace:8, home:36, end:35, enter:13, esc:27, tab:9}}, constructor:function(config) {
   var me = this, keymapCfg, map;
   if (arguments.length === 2) {
-    Ext.raise('2-argument KeyNav constructor is removed. Use a config object instead.');
+    Ext.raise('2-argument KeyNav constructor is removed. Use a Config object instead.');
   }
   config = config || {};
   keymapCfg = {target:config.target, ignoreInputFields:config.ignoreInputFields, eventName:me.getKeyEvent('forceKeyDown' in config ? config.forceKeyDown : me.forceKeyDown, config.eventName), capture:config.capture};
@@ -36949,7 +36949,7 @@ manageBorders:false, classCls:Ext.baseCSSPrefix + 'container', managedBordersCls
 }, factoryItem:function(item) {
   var me = this;
   if (!item) {
-    Ext.Logger.error('Invalid item given: ' + item + ', must be either the config object to factory a ' + 'new item, or an existing component instance');
+    Ext.Logger.error('Invalid item given: ' + item + ', must be either the Config object to factory a ' + 'new item, or an existing component instance');
   }
   item = me.applyItemDefaults(item);
   if (!item.isComponent) {
@@ -39693,7 +39693,7 @@ Ext.define('Ext.app.ViewController', {extend:Ext.app.BaseController, alias:'cont
   var me = this, viewModel = me.getViewModel(), getBindTemplateScope = me.getBindTemplateScope(), b, fn, descriptor;
   me.$hasBinds = true;
   if (!viewModel) {
-    Ext.raise('Cannot use bind config without a viewModel');
+    Ext.raise('Cannot use bind Config without a viewModel');
   }
   for (fn in bindings) {
     descriptor = bindings[fn];
@@ -47176,7 +47176,7 @@ template:[{reference:'bodyWrapElement', cls:Ext.baseCSSPrefix + 'body-wrap-el', 
   this.bodyElement.applyStyles(bodyStyle);
   return null;
 }, getBodyStyle:function() {
-  Ext.Error.raise("'bodyStyle' is a write-only config.  To query element styles use the " + 'Ext.dom.Element API.');
+  Ext.Error.raise("'bodyStyle' is a write-only Config.  To query element styles use the " + 'Ext.dom.Element API.');
 }, addTool:function(tool) {
   var header = this.ensureHeader(), items;
   if (header) {
@@ -48359,7 +48359,7 @@ defaultBindProperty:'value', twoWayBindable:{value:1}, publishes:{value:1}, inpu
     Ext.raise('Cannot add trigger. Key must be a string.');
   }
   if (typeof trigger !== 'string' && !Ext.isObject(trigger)) {
-    Ext.raise('Cannot add trigger "' + name + '". A config or instance is required.');
+    Ext.raise('Cannot add trigger "' + name + '". A Config or instance is required.');
   }
   trigger = me.createTrigger(name, trigger);
   if (triggers) {

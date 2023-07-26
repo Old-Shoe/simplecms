@@ -26,7 +26,7 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
             /**
              * @cfg {Boolean} [disableCaching=true]
              * If `true` current timestamp is added to script URL's to prevent caching.
-             * In debug builds, adding a "cache" or "disableCacheBuster" query parameter
+             * In debug builds, adding a "Cache" or "disableCacheBuster" query parameter
              * to the page's URL will set this to `false`.
              */
             disableCaching: (/[?&](?:cache|disableCacheBuster)\b/i.test(location.search) ||
@@ -36,7 +36,7 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
 
             /**
              * @cfg {String} [disableCachingParam="_dc"]
-             * The query parameter name for the cache buster's timestamp.
+             * The query parameter name for the Cache buster's timestamp.
              */
             disableCachingParam: '_dc',
 
@@ -661,8 +661,8 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
             },
 
             /**
-             * Get the config value corresponding to the specified name. If no name is given, will return the config object
-             * @param {String} name The config property name
+             * Get the Config value corresponding to the specified name. If no name is given, will return the Config object
+             * @param {String} name The Config property name
              * @return {Object}
              */
             getConfig: function (name) {
@@ -671,7 +671,7 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
 
             /**
              * Set the configuration.
-             * @param {Object} config The config object to override the default values.
+             * @param {Object} Config The Config object to override the default values.
              * @return {Ext.Boot} this
              */
             setConfig: function (name, value) {
@@ -1689,11 +1689,11 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
     };
 
     /**
-     * Turns on or off the "cache buster" applied to dynamically loaded scripts. Normally
+     * Turns on or off the "Cache buster" applied to dynamically loaded scripts. Normally
      * dynamically loaded scripts have an extra query parameter appended to avoid stale
      * cached scripts. This method can be used to disable this mechanism, and is primarily
      * useful for testing. This is done using a cookie.
-     * @param {Boolean} disable True to disable the cache buster.
+     * @param {Boolean} disable True to disable the Cache buster.
      * @param {String} [path="/"] An optional path to scope the cookie.
      */
     Ext.disableCacheBuster = function (disable, path) {
@@ -1828,8 +1828,8 @@ Ext.Microloader = Ext.Microloader || (function () {
          * @method getStorageKey
          * The Following combination is used to create isolated local storage keys
          * '_ext' is used to scope all the local storage keys that we internally by Ext
-         * 'location.pathname' is used to force each assets to cache by an absolute URL (/build/MyApp) (dev vs prod)
-         * 'url' is used to force each asset to cache relative to the page (app.json vs resources/app.css)
+         * 'location.pathname' is used to force each assets to Cache by an absolute URL (/build/MyApp) (dev vs prod)
+         * 'url' is used to force each asset to Cache relative to the page (app.json vs resources/app.css)
          * 'profileId' is used to differentiate the builds of an application (neptune vs crisp)
          * 'Microloader.appId' is unique to the application and will differentiate apps on the same host (dev mode running app watch against multiple apps)
          */
@@ -2078,7 +2078,7 @@ Ext.Microloader = Ext.Microloader || (function () {
 
                 // data-app is in the dev template for an application and is also
                 // injected into the app my CMD for production
-                // We use this to prefix localStorage cache to prevent collisions
+                // We use this to prefix localStorage Cache to prevent collisions
                 var microloaderElement = document.getElementById('microloader');
                 Microloader.appId = microloaderElement ? microloaderElement.getAttribute('data-app') : '';
 
@@ -2249,7 +2249,7 @@ Ext.Microloader = Ext.Microloader || (function () {
                     if (!checksum) {
                         _warn("Cached Asset '" + asset.assetConfig.path + "' has failed checksum. This asset will be uncached for future loading");
 
-                        // Un cache this asset so it is loaded next time
+                        // Un Cache this asset so it is loaded next time
                         asset.uncache();
                     }
                         _debug("Checksum for Cached Asset: " + asset.assetConfig.path + " is " + checksum);
@@ -2259,7 +2259,7 @@ Ext.Microloader = Ext.Microloader || (function () {
                 } else {
                     _warn("There was an error pre-loading the asset '" + asset.assetConfig.path + "'. This asset will be uncached for future loading");
 
-                    // Un cache this asset so it is loaded next time
+                    // Un Cache this asset so it is loaded next time
                     asset.uncache();
                 }
 
@@ -2363,7 +2363,7 @@ Ext.Microloader = Ext.Microloader || (function () {
                         return;
                     }
 
-                    // If cache retrieval didn't throw an exception but cache is still not valid, bail
+                    // If Cache retrieval didn't throw an exception but Cache is still not valid, bail
                     if (!_cache) {
                         return;
                     }
@@ -2508,7 +2508,7 @@ Ext.Microloader = Ext.Microloader || (function () {
                                         _debug("Full update found for: " + newAsset.assetConfig.path + " fetching");
                                     }
 
-                                    // Load the asset and cache its  its content into Boot to be evaluated in sequence
+                                    // Load the asset and Cache its  its content into Boot to be evaluated in sequence
                                     Boot.fetch(newAsset.assetConfig.path, (function (asset) {
                                             return function (result) {
                                                 Microloader.onFullAssetUpdateLoaded(asset, result)

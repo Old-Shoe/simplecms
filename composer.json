@@ -12,8 +12,10 @@
         "smarty/smarty": "^4.2",
         "xpdo/xpdo": "^v3.1.2",
         "monolog/monolog": "^3.2",
-      "ext-dom": "*",
-        "ext-libxml": "*"
+        "ext-dom": "*",
+        "ext-libxml": "*",
+        "symfony/finder": "^6.1",
+        "socialconnect/auth": "^3.3"
     },
     "suggest": {
         "workerman/workerman": "Start with workerman"

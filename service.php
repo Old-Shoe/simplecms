@@ -2,11 +2,12 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+use Swoole\Coroutine;
 use Swoole\Http\Server;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 
-Swoole\Coroutine::set([
+Coroutine::set([
     'trace_flags' => SWOOLE_TRACE_HTTP2,
     'log_level' => 0,
 ]);

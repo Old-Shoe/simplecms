@@ -8,7 +8,7 @@ spl_autoload_register(function ($class) {
 });
 
 try {
-    Phar::mapPhar('me.phar');
+    Phar::mapPhar('users.phar');
     include 'phar://users.phar/loader.php';
 } catch (PharException $e) {
     echo $e->getMessage();

@@ -1,6 +1,6 @@
 <?php
 
-class Extension
+class Extension implements ExtensionInterface
 {
     public static function install(): void
     {

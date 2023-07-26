@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * The MIT License
  *
@@ -22,29 +22,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Core;
 
-use Yosymfony\Toml\Toml;
-use Exception;
+namespace App;
 
-class Locale
+use Core\Databases\Database;
+use Core\Logging\Log;
+use Monolog\Level;
+
+final class App extends Log
 {
-    /**
-     * @throws Exception
-     */
-    static function init() :void
+    private array $array_conf = array();
+
+    public function __construct()
     {
-        $array = Toml::ParseFile(SIMPLECMS_ROOT_DIR . '/core/config/coreconfig.toml');
+        parent::__construct(level: Level::Info);
 
-        putenv("LANG=".$array['locale']['language']);
-        //setlocale(LC_MESSAGES, $array['locale']['language'].'.'.$array['locale']['codeset']);
-        setlocale(LC_ALL, $array['locale']['language'].'.'.$array['locale']['codeset']);
-        $domain = "messages";
+        //$Config = new Config(Level::Info);
 
-        if (!bindtextdomain($domain, SIMPLECMS_ROOT_DIR . "/locale")) {
-            throw new Exception(_("%%exc_bind_domain%%"));
-        }
-        textdomain($domain);
-        bind_textdomain_codeset($domain, $array['locale']['codeset']);
+        $query = 'INSERT INTO config (scope, `key`, value) VALUES (:scope, :key, :value);';
+        $config = ["sda", "sf"];
+        $result = Database::Init("primary")::MTO($query, $config);
+
+        //var_dump($this->create(["blabla" => "123", "bloblo" => 321], "locale"));
+
+        //var_dump($Config->read(["blabla", "bloblo"]));
+
+        /*var_dump($this->create("blabla", "locale", "123"));
+        var_dump($this->create("bloblo", "locale", "fuck you"));
+
+        var_dump($this->read("blabla"));
+        var_dump($this->read("bloblo"));
+
+        var_dump($this->update("blabla", "321"));
+        var_dump($this->update("bloblo", "hello you"));
+
+        var_dump($this->read("blabla"));
+        var_dump($this->read("bloblo"));
+
+        var_dump($this->delete("blabla"));
+        var_dump($this->delete("bloblo"));*/
     }
 }

@@ -2,7 +2,7 @@
 /*
  * The MIT License
  *
- * Copyright 2020 Leonid Kuzin(Dg_INC) <dg.inc.lcf@gmail.com>.
+ * Copyright 2023 Leonid Kuzin(Dg_INC) <dg.inc.lcf@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,9 @@
  * THE SOFTWARE.
  */
 
-require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/core/autoload.php';
+namespace Core\Logging;
 
-use App\App;
+class Construct
+{
 
-$app = new App();
+}

@@ -23,9 +23,13 @@
  * THE SOFTWARE.
  */
 
-require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/core/autoload.php';
+namespace Core\Include;
 
-use App\App;
-
-$app = new App();
+interface CRUDInterface
+{
+    public function create(string|array $config, string $scope, mixed $value): bool;
+    public function read(string|array $config): mixed;
+    public function readAll(string $scope): array;
+    public function update(string|array $config, string $scope, mixed $value): bool;
+    public function delete(string|array $config, string $scope): bool;
+}

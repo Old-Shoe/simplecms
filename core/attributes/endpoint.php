@@ -23,9 +23,12 @@
  * THE SOFTWARE.
  */
 
-require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/core/autoload.php';
+namespace Core\Attributes;
 
-use App\App;
+use Attribute;
 
-$app = new App();
+#[Attribute(Attribute::TARGET_CLASS|Attribute::IS_REPEATABLE)]
+final class Endpoint
+{
+
+}

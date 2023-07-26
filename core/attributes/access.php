@@ -23,9 +23,17 @@
  * THE SOFTWARE.
  */
 
-require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/core/autoload.php';
+namespace Core\Attributes;
 
-use App\App;
+use Attribute;
 
-$app = new App();
+#[Attribute(Attribute::TARGET_FUNCTION|Attribute::TARGET_METHOD|Attribute::IS_REPEATABLE)]
+final class Access
+{
+    private const DEFAULT_ACCESS = 1;
+    private int $access_rights;
+
+    public function __construct() {
+
+    }
+}

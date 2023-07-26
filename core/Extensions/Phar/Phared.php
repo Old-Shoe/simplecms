@@ -24,12 +24,15 @@
  * THE SOFTWARE.
  */
 
-namespace Core\Include;
+declare(strict_types=1);
+
+namespace Core\Extensions\Phar;
+
 use BadMethodCallException;
 use Exception;
 use FilesystemIterator;
 use Phar;
-use stdClass;
+use RuntimeException;
 use UnexpectedValueException;
 
 /**
@@ -38,11 +41,11 @@ use UnexpectedValueException;
  * @author Leonid Kuzin(Dg_INC) <dg.inc.lcf@gmail.com>
  */
 class Phared {
-    protected Phar|null $phar = null;
-    protected array $metadata;
+    protected ?Phar $phar = null;
+    protected array $metadata = array();
 
     /**
-     * @throws Exception
+     * @throws RuntimeException
      */
     public function __construct(string $path)
     {
@@ -57,10 +60,16 @@ class Phared {
         }
 
         if(!$this->phar->hasMetadata() && $this->phar != null) {
-            throw new Exception(_("No metadata in file!"));
+            throw new RuntimeException(_("No metadata in file!"));
         } else {
             $this->metadata = $this->phar->getMetadata();
         }
+    }
+
+    public function __destruct()
+    {
+        unset($this->phar);
+        unset($this->metadata);
     }
 
     public function getMetadata()
@@ -74,22 +83,18 @@ class Phared {
     }
 
     /**
-     * @throws Exception
+     * @throws RuntimeException
      */
     public function verify(string $sign): bool
     {
         $file_sign = $this->phar->getSignature();
         if($file_sign === false){
-            throw new Exception('Signature not found!');
+            throw new RuntimeException('Signature not found!');
         }
         switch ($file_sign['hash'])
         {
             case 'MD5':
-                if($file_sign['hash_type'] === $sign)
-                {
-                    return true;
-                }
-                break;
+                return hash_equals($sign, $file_sign['hash_type']);
             case 'OPENSSL':
                 break;
         }
@@ -102,7 +107,7 @@ class Phared {
     }
 
     /**
-     * @throws Exception
+     * @throws RuntimeException
      */
     public function getInfo(): array
     {
@@ -110,7 +115,7 @@ class Phared {
     }
 
     /**
-     * @throws Exception
+     * @throws RuntimeException
      */
     public function getInstances(): array
     {

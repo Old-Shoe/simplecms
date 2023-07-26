@@ -16,7 +16,7 @@ class Response
 
     public mixed $trailer;
 
-    public function __destruct(): void
+    public function __destruct()
     {
     }
 
@@ -25,6 +25,7 @@ class Response
      */
     public function initHeader(): mixed
     {
+        return false;
     }
 
     /**
@@ -32,6 +33,7 @@ class Response
      */
     public function isWritable(): mixed
     {
+        return false;
     }
 
     /**
@@ -48,6 +50,7 @@ class Response
      */
     public function cookie(mixed $name, mixed $value = null, mixed $expires = null, mixed $path = null, mixed $domain = null, mixed $secure = null, mixed $httponly = null, mixed $samesite = null, mixed $priority = null): mixed
     {
+        return false;
     }
 
     /**
@@ -64,6 +67,7 @@ class Response
      */
     public function setCookie(mixed $name, mixed $value = null, mixed $expires = null, mixed $path = null, mixed $domain = null, mixed $secure = null, mixed $httponly = null, mixed $samesite = null, mixed $priority = null): mixed
     {
+        return false;
     }
 
     /**
@@ -80,6 +84,7 @@ class Response
      */
     public function rawcookie(mixed $name, mixed $value = null, mixed $expires = null, mixed $path = null, mixed $domain = null, mixed $secure = null, mixed $httponly = null, mixed $samesite = null, mixed $priority = null): mixed
     {
+        return false;
     }
 
     /**
@@ -110,6 +115,7 @@ class Response
      */
     public function header(mixed $key, mixed $value, mixed $format = null): mixed
     {
+        return false;
     }
 
     /**
@@ -120,6 +126,7 @@ class Response
      */
     public function setHeader(mixed $key, mixed $value, mixed $format = null): mixed
     {
+        return false;
     }
 
     /**
@@ -129,6 +136,7 @@ class Response
      */
     public function trailer(mixed $key, mixed $value): mixed
     {
+        return false;
     }
 
     /**
@@ -136,6 +144,7 @@ class Response
      */
     public function ping(): mixed
     {
+        return false;
     }
 
     /**
@@ -143,6 +152,7 @@ class Response
      */
     public function goaway(): mixed
     {
+        return false;
     }
 
     /**
@@ -151,6 +161,7 @@ class Response
      */
     public function write(mixed $content): mixed
     {
+        return false;
     }
 
     /**
@@ -159,6 +170,7 @@ class Response
      */
     public function end(mixed $content = null): mixed
     {
+        return false;
     }
 
     /**
@@ -169,6 +181,7 @@ class Response
      */
     public function sendfile(mixed $filename, mixed $offset = null, mixed $length = null): mixed
     {
+        return false;
     }
 
     /**
@@ -178,6 +191,7 @@ class Response
      */
     public function redirect(mixed $location, mixed $http_code = null): mixed
     {
+        return false;
     }
 
     /**
@@ -185,6 +199,7 @@ class Response
      */
     public function detach(): mixed
     {
+        return false;
     }
 
     /**
@@ -194,6 +209,7 @@ class Response
      */
     public static function create(mixed $server, mixed $fd = null): mixed
     {
+        return false;
     }
 
     /**
@@ -201,6 +217,7 @@ class Response
      */
     public function upgrade(): mixed
     {
+        return false;
     }
 
     /**
@@ -211,6 +228,7 @@ class Response
      */
     public function push(mixed $data, mixed $opcode = null, mixed $flags = null): mixed
     {
+        return false;
     }
 
     /**
@@ -218,6 +236,7 @@ class Response
      */
     public function recv(): mixed
     {
+        return false;
     }
 
     /**
@@ -225,5 +244,6 @@ class Response
      */
     public function close(): mixed
     {
+        return false;
     }
 }

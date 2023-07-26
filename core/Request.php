@@ -59,6 +59,7 @@ class Request
      */
     public function getContent(): string|false
     {
+        return false;
     }
 
     /**
@@ -71,6 +72,7 @@ class Request
      */
     public function rawContent(): bool|string
     {
+        return false;
     }
 
     /**
@@ -78,6 +80,7 @@ class Request
      */
     public function getData(): mixed
     {
+        return false;
     }
 
     /**
@@ -86,6 +89,7 @@ class Request
      */
     public static function create(mixed $options = null): mixed
     {
+        return false;
     }
 
     /**
@@ -94,6 +98,7 @@ class Request
      */
     public function parse(mixed $data): mixed
     {
+        return false;
     }
 
     /**
@@ -101,6 +106,7 @@ class Request
      */
     public function isCompleted(): mixed
     {
+        return false;
     }
 
     /**

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * The MIT License
  *
@@ -23,28 +23,28 @@
  * THE SOFTWARE.
  */
 
-namespace Core;
+namespace Core\Autoload;
 
 use Exception;
 
-define('SIMPLECMS_ROOT_DIR', $_SERVER['DOCUMENT_ROOT'] .DIRECTORY_SEPARATOR);
-define('SIMPLECMS_CORE_DIR', SIMPLECMS_ROOT_DIR. 'core' .DIRECTORY_SEPARATOR);
-define('SIMPLECMS_CONFIG_DIR', SIMPLECMS_CORE_DIR. 'config' .DIRECTORY_SEPARATOR);
-define('SIMPLECMS_CACHE_DIR', SIMPLECMS_CORE_DIR. 'cache' .DIRECTORY_SEPARATOR);
-define('SIMPLECMS_EXT_DIR', SIMPLECMS_ROOT_DIR. 'extensions' .DIRECTORY_SEPARATOR);
-define('SIMPLECMS_WEBROOT_DIR', SIMPLECMS_ROOT_DIR. 'webroot' .DIRECTORY_SEPARATOR);
+define('SIMPLECMS_DEBUG', 1);
 
-set_include_path(SIMPLECMS_ROOT_DIR);
+define('SIMPLECMS_ROOT_DIR', $_SERVER['DOCUMENT_ROOT'] .DIRECTORY_SEPARATOR);
+define('SIMPLECMS_CORE_DIR', SIMPLECMS_ROOT_DIR. 'Core' .DIRECTORY_SEPARATOR);
+define('SIMPLECMS_CONFIG_DIR', SIMPLECMS_CORE_DIR. 'Config' .DIRECTORY_SEPARATOR);
+define('SIMPLECMS_CACHE_DIR', SIMPLECMS_CORE_DIR. 'Cache' .DIRECTORY_SEPARATOR);
+define('SIMPLECMS_EXT_DIR', SIMPLECMS_ROOT_DIR. 'Extensions' .DIRECTORY_SEPARATOR);
+define('SIMPLECMS_WEBROOT_DIR', SIMPLECMS_ROOT_DIR. 'Webroot' .DIRECTORY_SEPARATOR);
+define('SIMPLECMS_LOGS_DIR', SIMPLECMS_ROOT_DIR. 'Logs' .DIRECTORY_SEPARATOR);
+
+set_include_path(SIMPLECMS_ROOT_DIR . PATH_SEPARATOR . get_include_path());
 
 function namespaces_autoload ($class): void {
-    $lcfirst = fn(string $name) => strtolower($name);
+    $class = implode(DIRECTORY_SEPARATOR, explode('\\', $class));
 
-    $class = implode(DIRECTORY_SEPARATOR, array_map($lcfirst, explode('\\' , $class)));
-
-    static $extensions = array();
-    if (empty($extensions)) {
-        $extensions = array_map('trim',
-                explode(',', spl_autoload_extensions('.php , .class.php')));
+    static $extension = null;
+    if (is_null($extension)) {
+        $extension = spl_autoload_extensions('.php');
     }
     static $include_paths = array();
     if (empty($include_paths)) {
@@ -52,17 +52,16 @@ function namespaces_autoload ($class): void {
     }
     foreach ($include_paths as $path) {
         $path .= (DIRECTORY_SEPARATOR !== $path[strlen($path) - 1]) ? DIRECTORY_SEPARATOR : '';
-        foreach ($extensions as $extension) {
-            $file = $path . $class . $extension;
-            try {
-                if (file_exists($file) && is_readable($file)) {
-                    require $file;
-                }
-            } catch (Exception $e) {
-                echo sprintf(_("%%exc_autoload %s: %s %%"), $class, $e->getMessage());
+
+        $file = $path . $class . $extension;
+        try {
+            if (file_exists($file) && is_readable($file)) {
+                require_once $file; //TODO: Maybe cause problem. (Need to rewrite to DirectoryIterator)
             }
+        } catch (Exception $e) {
+            echo sprintf(_("%%exc_autoload %s: %s %%"), $class, $e->getMessage());
         }
     }
 }
 
-spl_autoload_register(__NAMESPACE__ . '\namespaces_autoload', TRUE, FALSE);
+spl_autoload_register(__NAMESPACE__ . '\namespaces_autoload', true, false);

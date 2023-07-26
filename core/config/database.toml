@@ -1,24 +1,19 @@
-[session]
-server = "127.0.0.1"
-port = "6879"
-user = "root"
-pass = ""
-
-
-[data]
-    [data.primary]
-    driver = "mysql"
-    host = "127.0.0.1"
-    port = "3306"
-    schema = "utf8mb4"
-    db = "simplecms"
-    username = "root"
-    password = "h4G08o$$"
-    [data.secondary]
-    driver = "mysql"
-    host = "10.5.50.254"
-    port = "3306"
-    schema = "utf8mb4"
-    db = "simplecms"
-    username = "simplecms"
-    password = "password"
+[databases]
+    [databases.primary]
+        driver = "mysql"
+        host = "127.0.0.1"
+        port = "3306"
+        schema = "utf8mb4"
+        db = "simplecms"
+        prefix = ""
+        username = "root"
+        password = "h4G08o$$"
+    [databases.secondary]
+        driver = "mysql"
+        host = "10.5.50.254"
+        port = "3306"
+        schema = "utf8mb4"
+        db = "simplecms"
+        prefix = ""
+        username = "simplecms"
+        password = "password"
